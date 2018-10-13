@@ -1,6 +1,7 @@
 import sys
 import paho.mqtt.client as mqtt # importa o pacote mqtt
 
+temperatura = 25
 
 # funcao on_connect sera atribuida e chamada quando a conexao for iniciada
 # ela printara na tela caso tudo ocorra certo durante a tentativa de conexao
@@ -8,7 +9,7 @@ import paho.mqtt.client as mqtt # importa o pacote mqtt
 def on_connect(client, userdata, flags, rc):
     print("[STATUS] Conectado ao Broker. Resultado de conexao: "+str(rc))
 
-    client.subscribe('sensor/ar-condicionado')
+    client.subscribe('sensor/pos/ar-condicionado')
 
 # possui o mesmo cenario que o on_connect, porem, ela sera atrelada ao loop
 # do script, pois toda vez que receber uma nova mensagem do topico assinado, ela sera invocada
@@ -18,22 +19,24 @@ def on_message(client, userdata, msg):
     print("[MSG RECEBIDA] Topico: "+msg.topic+" / Mensagem: "+ message) # imprime no console a mensagem
 
     # testara se o topico desta mensagem sera igual ao topico que queremos, que neste caso remete ao led
-    if msg.topic == 'sensor/ar-condicionado':
+    if msg.topic == 'sensor/pos/ar-condicionado':
 
-        
+        global temperatura
 
         if(message == "b'1'"):
             print("Ar-condicionado Ligado")
-            client.publish('sensor/temperatura-ar-condicionado', 25, qos=0)
+            client.publish('sensor/pos/temperatura-ar-condicionado', temperatura, qos=0)
         elif(message == "b'0'"):
             print("Ar-condicionado Desligado")
-            client.publish('sensor/temperatura-ar-condicionado', '--', qos=0)
+            client.publish('sensor/pos/temperatura-ar-condicionado', '--', qos=0)
         elif(message == "b'2'"):
             temperatura = temperatura+1
-            client.publish('sensor/temperatura-ar-condicionado', temperatura, qos=0)
+            print("Temperatura do Ar-condicionado: " + str(temperatura))
+            client.publish('sensor/pos/temperatura-ar-condicionado', temperatura, qos=0)
         else:
             temperatura = temperatura-1
-            client.publish('sensor/temperatura-ar-condicionado', temperatura, qos=0)
+            print("Temperatura do Ar-condicionado: " + str(temperatura))
+            client.publish('sensor/pos/temperatura-ar-condicionado', temperatura, qos=0)
 
 
 try:

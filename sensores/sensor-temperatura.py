@@ -7,7 +7,7 @@ AREA_ID = 10
 SENSOR_ID = 5000
 
 # topico do sensor de temperatura
-tt = "sensor/temperatura"
+tt = "sensor/pos/temperatura"
 
 # cria um identificador baseado no id do sensor
 client = mqtt.Client(client_id = 'NODE:ss', protocol = mqtt.MQTTv31)

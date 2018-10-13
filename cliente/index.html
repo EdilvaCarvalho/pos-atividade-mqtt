@@ -10,27 +10,35 @@
   <body onload="init();">
     <div class="container">
       <div class=" app">
+      <div class="center">
         <div class="quadrado">
           <h5>Temperatura:</h5>
           <p id="sensor">25 °C</p>
         </div>
+        </div>
         <div class="center">
           <h2>Lâmpada</h2>
-          <button class="waves-effect waves-light btn green btn-led" id="btn-on" onclick="onLampada()">ON</button>
-          <button class="waves-effect waves-light btn red btn-led" id="btn-off" onclick="offLampada()">OFF</button>
+          <button class="waves-effect waves-light btn green btn-lampada" id="btn-onLampada" onclick="onLampada()">ON</button>
+          <button class="waves-effect waves-light btn red btn-lampada" id="btn-offLampada" onclick="offLampada()">OFF</button>
+        </div>
+        <div class="center">
+          <img src="../img/lampadaApagada.jpg" id="lampada"/>
         </div>
         <div class="center">
           <h2>Ar-condicionado</h2>
-          <button class="waves-effect waves-light btn green btn-led" id="btn-on" onclick="onAr()">ON</button>
-          <button class="waves-effect waves-light btn red btn-led" id="btn-off" onclick="offAr()">OFF</button>
+          <button class="waves-effect waves-light btn green btn-led" id="btn-onAr" onclick="onAr()">ON</button>
+          <button class="waves-effect waves-light btn red btn-led" id="btn-offAr" onclick="offAr()">OFF</button>
         </div>
+        <br/>
+        <div class="center">
         <div class="quadrado">
           <h5>Ar-condicionado:</h5>
-          <p id="ar-condicionado">--</p>
+          <p id="ar-condicionado">-- °C</p>
+        </div>
         </div>
         <div class="center">
-          <button class="waves-effect waves-light btn green btn-led" id="btn-on" onclick="aumentaAr()">Aumentar</button>
-          <button class="waves-effect waves-light btn red btn-led" id="btn-off" onclick="diminuiAr()">Diminuir</button>
+          <button class="waves-effect waves-light btn green btn-arAumenta" id="btn-aumentaAr" onclick="aumentaAr()" disabled>Aumentar</button>
+          <button class="waves-effect waves-light btn red btn-arDiminui" id="btn-diminuiAr" onclick="diminuiAr()" disabled>Diminuir</button>
         </div>
       </div>
     </div>

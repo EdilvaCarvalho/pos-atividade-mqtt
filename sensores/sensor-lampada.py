@@ -1,8 +1,6 @@
 import sys
 import paho.mqtt.client as mqtt # importa o pacote mqtt
 
-#topic = 'DZ/#' # define o topico que este script assinara
-
 
 # funcao on_connect sera atribuida e chamada quando a conexao for iniciada
 # ela printara na tela caso tudo ocorra certo durante a tentativa de conexao
@@ -10,7 +8,7 @@ import paho.mqtt.client as mqtt # importa o pacote mqtt
 def on_connect(client, userdata, flags, rc):
     print("[STATUS] Conectado ao Broker. Resultado de conexao: "+str(rc))
 
-    client.subscribe('sensor/lampada')
+    client.subscribe('sensor/pos/lampada')
 
 # possui o mesmo cenario que o on_connect, porem, ela sera atrelada ao loop
 # do script, pois toda vez que receber uma nova mensagem do topico assinado, ela sera invocada
@@ -19,15 +17,17 @@ def on_message(client, userdata, msg):
     message = str(msg.payload) # converte a mensagem recebida
     print("[MSG RECEBIDA] Topico: "+msg.topic+" / Mensagem: "+ message) # imprime no console a mensagem
 
-    # testara se o topico desta mensagem sera igual ao topico que queremos, que neste caso remete ao led
-    if msg.topic == 'sensor/lampada':
+    # testara se o topico desta mensagem sera igual ao topico que queremos, que neste caso remete à lâmpada
+    if msg.topic == 'sensor/pos/lampada':
 
-        # basicamente nessa condicional testara se o valor recebido sera 1, sendo 1 acende o led
-        # e, caso receber qualquer outra coisa, apagara o led
+        # basicamente nessa condicional testara se o valor recebido sera 1, sendo 1 acende a lâmpada
+        # e, caso receber qualquer outra coisa, apagara a lâmpada
         if(message == "b'1'"):
             print("Lâmpada Acesa")
+            client.publish('sensor/pos/lampada1', 'acesa', qos=0)
         else:
             print("Lâmpada Apagada")
+            client.publish('sensor/pos/lampada1', 'apagada', qos=0)
 
 try:
     print("[STATUS] Inicializando MQTT...")
